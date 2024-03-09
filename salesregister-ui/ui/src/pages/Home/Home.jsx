@@ -1,22 +1,24 @@
 import React from "react";
 import styles from "./styles.module.scss";
-import {useNavigate} from "react-router-dom";
+import { useNavigate } from "react-router-dom";
 
 
-const Home = ({props}) => {
+const Home = ({ props }) => {
 
-    const navigate = useNavigate();
-    // const handleRegisterClick = () => {
-    //     navigate("/register");
-    // };
+  const navigate = useNavigate();
 
-    return (
-        <div className={styles.main}>
-            {/* <h1>Welcome to Transaction Register</h1> */}
-        <button onClick={() => navigate("/register")}>Register Product</button>
+  const handleRegisterClick = () => {
+    console.log("ClicKed!");
+    navigate("/register");
+  };
 
-        </div>
-    );
+  return (
+    <div className={styles.main}>
+      {/* <h1>Welcome to Transaction Register</h1> */}
+      <button onClick={handleRegisterClick}>Register Product</button>
+
+    </div>
+  );
 }
 
 export default Home;
