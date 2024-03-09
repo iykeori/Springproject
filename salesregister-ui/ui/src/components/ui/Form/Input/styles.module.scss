@@ -1,0 +1,11 @@
+/* The following line can be included in a src/App.scss */
+@import '~bootstrap/scss/bootstrap';
+main {
+    text-align: center;
+    .input {
+        width: 100%;
+    }
+    .error {
+        border: 1px solid red;
+    }
+}
