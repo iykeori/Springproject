@@ -10,7 +10,7 @@ const Layout = ({props}) => {
             <header>
                 <AppHeader />
             </header>
-            <h2> Layout</h2>
+            {/* <h2> Layout</h2> */}
             
             <main className="container">
                 <Outlet />

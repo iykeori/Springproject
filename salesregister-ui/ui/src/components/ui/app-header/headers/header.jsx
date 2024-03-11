@@ -7,7 +7,7 @@ const Header = () => {
     return (
         <div className={styles.main}>
             <Logo
-                logo="../app-header/logo/logo.png"
+                logo="https://cdn-icons-png.flaticon.com/512/25/25231.png"
             />
         </div>
     );

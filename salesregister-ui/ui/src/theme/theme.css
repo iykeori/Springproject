@@ -1,0 +1,14 @@
+:root {
+    
+  --primary-bg-color  : #b1d6c7;
+  --secondary-bg-color: #53a67e;
+  --tetiary-bg-color  : #44ec81;
+
+  --container-padding: 2rem;
+
+  --default-color: #fff;
+  --white        : #fff;
+  --mute         : #94a3b8;
+  --danger       : #dc0933;
+  --link-color   : #3074da;
+}

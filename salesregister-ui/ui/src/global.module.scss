@@ -1,0 +1,32 @@
+/* Big Fancy Button Styling */
+@import url(./theme/theme.css);
+body {
+    background-color: var(--primary-bg-color);
+    color: var(--default-color);
+}
+.bigFancyButton {
+    display: inline-block;
+    padding: 20px 40px;
+    font-size: 24px;
+    font-weight: bold;
+    text-transform: uppercase;
+    color: #fff;
+    background-color: #4CAF50; /* Green */
+    border: none;
+    border-radius: 50px;
+    box-shadow: 0 8px 16px rgba(0, 0, 0, 0.3); /* Add shadow */
+    cursor: pointer;
+    transition: transform 0.3s, box-shadow 0.3s, background-color 0.3s;
+    margin-top: 2rem;
+
+    &:hover {
+        background-color: #45a049; /* Darker Green */
+        box-shadow: 0 12px 20px rgba(0, 0, 0, 0.5); /* Increase shadow */
+        transform: translateY(-4px); /* Move button up slightly */
+    }
+    &:active {
+        background-color: #3e8e41; /* Active state */
+        box-shadow: 0 6px 12px rgba(0, 0, 0, 0.7); /* Reduce shadow */
+    }
+}
+  

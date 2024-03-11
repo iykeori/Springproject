@@ -6,74 +6,144 @@ import Select from "../../components/ui/Form/Select/Select.jsx";
 
 const transactionOptions = [
   { label: "Sales", value: "sales" },
-  { label: "Expenses", value: "e   " }
+  { label: "Expenses", value: "expenses" }
 ];
 
 const Register = ({ props }) => {
-  const [productName, setProductName] = useState("");
-  const [productNameError, setProductNameError] = useState(false);
-  const [amount, setAmount] = useState(0);
-  const [amountError, setAmountError] = useState(false);
-  const [tType, setTType] = useState(0);
-  const [tTypeError, setTTypeError] = useState(false);
+    const [inputs, setInputs] = useState({});
+    const [errorInputs, setErrorInputs] = useState({});
+    const [isError, setIsError] = useState(false);
+    const [message, setMessage] = useState("");
+    const [loading, setLoading] = useState(false);
 
-  const onSubmitHandler = () => {
-    if (!productName) {
-      setProductNameError(true);
+    const onSubmitHandler = async (event) => {
+        event.preventDefault();
+
+        if (validate()){
+            setLoading(true);
+            setIsError(false);
+
+            try {
+                const transactionRegisterPayload = {
+                    name: inputs.productName,
+                    transactionType: inputs.tType,
+                    amount: inputs.amount
+                };
+                // const response = await fetch("http://localhost:8080/api/v1/transaction-record", {
+                //     method: "POST",
+                //     headers: {
+                //         "Content-Type": "application/json",
+                //     },
+                //     body: JSON.stringify(transactionRegisterPayload),
+                // });
+
+                // const data = await response.json();
+                // console.log(data);
+                // if(data.error){
+                //     console.log(data.error);
+                //     setIsError(true);
+                //     setMessage(data.message);
+                //     setLoading(false);
+                // } else {
+                //     setIsError(false);
+                //     setLoading(false);
+
+                //     setInputs({});
+                   
+                // }
+            } catch (error) {
+                console.log(error.message);
+                setIsError(true);
+                setLoading(false);
+            }
+        }
+
+        
     }
-    if (!amount) {
-      setAmountError(true);
+
+    
+    
+
+    const onChangeHandler = (e, { productName, value }) => {
+        setErrorInputs( values => ({
+            ...values,
+            [productName]: value.length ? false : true
+        }));
+
+        setInputs( values => {
+            return {
+                ...values,
+                [productName]: value
+            }
+        });
     }
-    if (!tType) {
-      setTTypeError(true);
+
+    function validate() {
+        const {
+            productName,
+            amount,
+            tType
+        } = inputs;
+
+        if (!productName) {
+            setErrorInputs( values => ({
+                ...values,
+                productName: true
+            }));
+        }
+
+        if (!amount) {
+            setErrorInputs( values => ({
+                ...values,
+                amount: true
+            }));
+        }
+
+        if (!tType) {
+            setErrorInputs( values => ({
+                ...values,
+                tType: true
+            }));
+        }
+
+        return productName && amount && tType;
     }
 
-    if (productName && amount && tType) {
-      console.log(productName, amount, tType);
-    }
-  }
 
-  const onChangeHandler = (e) => {
-    setProductName(e.target.value);
-    setAmount(e.target.value);
-    setTType(e.target.value);
-  }
+    return (
+        <div className={styles.registerDiv}>
+        <h2>Register Transaction</h2>
+        <Form onSubmitHandler={onSubmitHandler}>
+            <Input
+            error={errorInputs.productName}
+            type={"text"}
+            label={"Product Name"}
+            value={inputs.productName}
+            placeholder={"Product Name"}
+            onChangeHandler={onChangeHandler}
+            />
 
-  return (
-    <div>
-      <h2>Register</h2>
-      <Form onSubmitHandler={onSubmitHandler}>
-        <Input
-          error={productNameError}
-          type={"text"}
-          label={"Product Name"}
-          value={productName}
-          placeholder={"Product Name"}
-          onChangeHandler={onChangeHandler}
-        />
+            <Select
+            error={errorInputs.tType}
+            label={"Transaction Type"}
+            value={inputs.tType}
+            options={transactionOptions}
+            onChangeHandler={onChangeHandler}
+            />
 
-        <Select
-          error={tTypeError}
-          label={"Transaction Type"}
-          value={tType}
-          options={transactionOptions}
-          onChangeHandler={onChangeHandler}
-        />
+            <Input
+            error={errorInputs.amount}
+            value={inputs.amount}
+            type={"number"}
+            label={"Amount"}
+            placeholder={"Amount"}
+            onChangeHandler={onChangeHandler}
+            />
 
-        <Input
-          error={amountError}
-          value={amount}
-          type={"number"}
-          label={"Amount"}
-          placeholder={"Amount"}
-          onChangeHandler={onChangeHandler}
-        />
-
-        <button type="submit">Submit</button>
-
-      </Form>
-    </div>
-  );
+            <button type="submit">Submit</button>
+        </Form>
+        </div>
+    );
 }
 
 export default Register;

@@ -1,6 +1,13 @@
 /* The following line can be included in a src/App.scss */
 @import '~bootstrap/scss/bootstrap';
 
-main {
+.main {
+    width: 100%;
+    margin: auto;
     text-align: center;
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    padding: 20px;
 }

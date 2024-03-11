@@ -1,5 +1,9 @@
 /* The following line can be included in a src/App.scss */
 @import '~bootstrap/scss/bootstrap';
-main {
-    text-align: center;
+.main {
+    // text-align: center;
+    .headerLogo {
+        width: 3rem !important;
+        height: 3rem !important;
+    }
 }

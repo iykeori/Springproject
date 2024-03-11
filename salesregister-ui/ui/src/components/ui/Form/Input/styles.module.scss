@@ -1,11 +1,28 @@
 /* The following line can be included in a src/App.scss */
 @import '~bootstrap/scss/bootstrap';
-main {
-    text-align: center;
+.main {
+    margin-bottom: 8px;
     .input {
         width: 100%;
+        padding: 10px;
+        font-size: 16px;
+        border: 1px solid #ccc;
+        border-radius: 4px;
+        background-color: #f8f8f8;
+        transition: border-color 0.3s ease;
+
+        &:focus {
+            border-color: #007bff; /* Border color on focus */
+            box-shadow: 0 0 0 2px rgba(0, 123, 255, 0.25); /* Focus border effect */
+            outline: none; /* Remove default outline */
+        }
     }
     .error {
         border: 1px solid red;
+    }
+    label{
+        font-size: 16px;
+        margin-bottom: 8px;
+        text-shadow: 1px 1px 1px rgba(0, 0, 0, 0.1); /* Add subtle shadow effect */
     }
 }
