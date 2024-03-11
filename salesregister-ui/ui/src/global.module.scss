@@ -18,6 +18,8 @@ body {
     cursor: pointer;
     transition: transform 0.3s, box-shadow 0.3s, background-color 0.3s;
     margin-top: 2rem;
+    display: inline-grid;
+    width: -webkit-fill-available;
 
     &:hover {
         background-color: #45a049; /* Darker Green */
@@ -28,5 +30,7 @@ body {
         background-color: #3e8e41; /* Active state */
         box-shadow: 0 6px 12px rgba(0, 0, 0, 0.7); /* Reduce shadow */
     }
+
+    
 }
   
