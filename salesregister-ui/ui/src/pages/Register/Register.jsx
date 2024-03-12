@@ -1,4 +1,4 @@
-import React, { useEffect, useState, useRef } from "react";
+import React, { useEffect, useState } from "react";
 import styles from './styles.module.scss';
 import Form from "../../components/ui/Form/Form.jsx";
 import Input from "../../components/ui/Form/Input/Input.jsx";
@@ -64,46 +64,33 @@ const Register = ({ props }) => {
     
     
 
-    const onChangeHandler = (e, { productName, value }) => {
-        setErrorInputs( values => ({
-            ...values,
-            [productName]: value.length ? false : true
-        }));
-
+    const onChangeHandler = (event, { name, value }) => {
+        event.preventDefault();
+        setErrorInputs( values => ({ ...values, [name]: value.length ? false : true}));
         setInputs( values => {
             return {
                 ...values,
-                [productName]: value
+                [name]: value
             }
         });
     }
 
+   
+    
+    
     function validate() {
-        const {
-            productName,
-            amount,
-            tType
-        } = inputs;
+        const { productName, amount, tType } = inputs;
 
         if (!productName) {
-            setErrorInputs( values => ({
-                ...values,
-                productName: true
-            }));
+            setErrorInputs( values => ({ ...values, productName: true }));
         }
 
         if (!amount) {
-            setErrorInputs( values => ({
-                ...values,
-                amount: true
-            }));
+            setErrorInputs( values => ({ ...values, amount: true }));
         }
 
         if (!tType) {
-            setErrorInputs( values => ({
-                ...values,
-                tType: true
-            }));
+            setErrorInputs( values => ({ ...values, tType: true }));
         }
 
         return productName && amount && tType;
@@ -112,37 +99,48 @@ const Register = ({ props }) => {
 
     return (
         <div className={styles.registerDiv}>
-        <h2>Register Transaction</h2>
-        <Form onSubmitHandler={onSubmitHandler}>
-            <Input
-            error={errorInputs.productName}
-            type={"text"}
-            label={"Product Name"}
-            value={inputs.productName}
-            placeholder={"Product Name"}
-            onChangeHandler={onChangeHandler}
-            />
+            <h2>Register Transaction</h2>
+            <Form onSubmitHandler={onSubmitHandler}>
+                <Input
+                error={errorInputs.productName}
+                type={"text"}
+                label={"Product Name"}
+                name={"productName"}
+                value={inputs.productName || ""}
+                placeholder={"Product Name"}
+                onChangeHandler={onChangeHandler}
+                />
 
-            <Select
-            error={errorInputs.tType}
-            label={"Transaction Type"}
-            value={inputs.tType}
-            options={transactionOptions}
-            onChangeHandler={onChangeHandler}
-            />
+                <Select
+                error={errorInputs.tType}
+                label={"Transaction Type"}
+                value={inputs.tType || ""}
+                options={transactionOptions}
+                onChangeHandler={onChangeHandler}
+                />
 
-            <Input
-            error={errorInputs.amount}
-            value={inputs.amount}
-            type={"number"}
-            label={"Amount"}
-            placeholder={"Amount"}
-            onChangeHandler={onChangeHandler}
-            />
+                <Input
+                error={errorInputs.amount}
+                value={inputs.amount || ""}
+                type={"number"}
+                name={"amount"}
+                label={"Amount"}
+                placeholder={"Amount"}
+                onChangeHandler={onChangeHandler}
+                />
 
-            <button type="submit">Submit</button>
-        </Form>
+                <button type="submit">Submit</button>
+            </Form>
+            {
+                isError ? (
+                    <div className={styles.errorDiv}>
+                        <p>{message}</p>
+                    </div>
+                ) : null
+            }
         </div>
+
+        
     );
 }
 

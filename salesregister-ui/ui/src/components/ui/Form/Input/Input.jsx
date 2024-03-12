@@ -5,6 +5,7 @@ const Input = ({
     error = false,
     type,
     label,
+    name,
     value = "",
     placeholder,
     onChangeHandler,
@@ -16,6 +17,7 @@ const Input = ({
             <input
                 className={`${styles.input} ${error ? styles.error : ""}`}
                 type={type || "text"}
+                name={name}
                 value={value}
                 placeholder={placeholder}
                 onChange={onChangeHandler}
