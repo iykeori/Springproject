@@ -38,6 +38,14 @@
         }
     }
 
+    .errorDiv{
+        display: inline-block;
+        color: red;
+    }
+    .addProductLink{
+        display: block;
+        text-align: end;
+    }
     @media(max-width: 768px){
         width: 100%;
     }

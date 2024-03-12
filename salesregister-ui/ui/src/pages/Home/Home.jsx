@@ -17,7 +17,7 @@ const Home = ({ props }) => {
     <div className={styles.main}>
       {/* <h1>Welcome to Transaction Register</h1> */}
         <button className={globalStyles.bigFancyButton} onClick={() => navigate("/register")}>Register Product</button>
-        <button className={globalStyles.bigFancyButton} onClick={() => navigate("#")}>View Records</button>
+        <button className={globalStyles.bigFancyButton} onClick={() => navigate("/record")}>View Records</button>
 
     </div>
   );
