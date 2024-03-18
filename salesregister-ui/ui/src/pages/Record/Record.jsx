@@ -11,8 +11,8 @@ import { useNavigate } from "react-router-dom";
 import Edit from "../Edit/Edit.jsx";
 
 const transactionOptions = [
-    { label: "Sales", value: "sales" },
-    { label: "Expenses", value: "expenses" }
+  { label: "Sales", value: "sales" },
+  { label: "Expenses", value: "expenses" }
 ];
 const Record = () => {
   const [data, setData] = useState([]);
@@ -34,9 +34,9 @@ const Record = () => {
   //const [editRow, setEditRow] = useState({});
 
   const editHandler = (row) => {
+    console.log("SELECTED ROW [EDIT]: ", row);
     setRow(row);
     setIsModalOpen(true);
-   
   };
 
   const closeModal = () => {
@@ -50,22 +50,22 @@ const Record = () => {
   };
 
 
-  
 
 
 
-   
+
+
 
   const deleteHandler = (row) => {
     console.log(row);
   }
 
-  
+
 
   // Component did mount - Cause side effect here...
   useEffect(() => {
     try {
-        setData([]);
+      setData([]);
       const fetchData = async () => {
         const response = await fetch(`${apiUrl}/transaction-record`, {
           method: "GET",
@@ -90,7 +90,7 @@ const Record = () => {
           {
             name: "Record ID",
             selector: (row) => row.id
-          },  
+          },
           {
             name: "Product ID",
             selector: (row) => row.transactionObj[0].id
@@ -110,63 +110,64 @@ const Record = () => {
           {
             name: "Actions",
             selector: (row) => {
-            return (
-              <div>
-                <button
-                  onClick={() => editHandler(row)}
+              return (
+                <div>
+                  <button
+                    onClick={() => editHandler(row)}
                     className="btn btn-primary"
                     style={{ marginRight: "10px" }}
-                >
-                  Edit
-                </button>
-                <button
-                  onClick={() => deleteHandler(row)}
+                  >
+                    Edit
+                  </button>
+                  <button
+                    onClick={() => deleteHandler(row)}
                     className="btn btn-danger"
-                >
-                  Delete
-                </button>
-              </div>
-              
-            )}
-            
+                  >
+                    Delete
+                  </button>
+                </div>
+
+              )
+            }
+
           }
         ])
       }
-      
+
     }
   }, [data.length]);
 
-  
-useEffect(() => {
+
+  useEffect(() => {
     const fetchData = async () => {
-        try {
-            const responses = await Promise.all([
-                fetch(`${apiUrl}/transaction-record/totalsales`),
-                fetch(`${apiUrl}/transaction-record/totalexpenses`),
-                fetch(`${apiUrl}/transaction-record/cashathand`)
-            ]);
+      try {
+        const responses = await Promise.all([
+          fetch(`${apiUrl}/transaction-record/totalsales`),
+          fetch(`${apiUrl}/transaction-record/totalexpenses`),
+          fetch(`${apiUrl}/transaction-record/cashathand`)
+        ]);
 
-            const data = await Promise.all(responses.map(response => response.json()));
+        const data = await Promise.all(responses.map(response => response.json()));
 
-            const [salesData, expensesData, incomeData] = data;
+        const [salesData, expensesData, incomeData] = data;
 
-            setTotalSales(salesData);
-            setTotalExpenses(expensesData);
-            setTotalIncome(incomeData);
-        } catch (error) {
-            console.log(error);
-        }
+        setTotalSales(salesData);
+        setTotalExpenses(expensesData);
+        setTotalIncome(incomeData);
+      } catch (error) {
+        console.log(error);
+      }
     };
 
     fetchData();
-}, [data.length]);
+  }, [data.length]);
 
 
   return (
     <div className={styles.main}>
       <h1>Record</h1>
-      <DataTable 
-        columns={columns} 
+      <DataTable
+        columns={columns}
         data={data}
       />
       <div className={styles.summary}>
