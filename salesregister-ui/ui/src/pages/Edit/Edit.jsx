@@ -5,6 +5,7 @@ import Modal from "../../components/ui/Modal/Modal";
 import styles from './styles.module.scss';
 import { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
+import Icon from "../../util/icons";
 
 
 const Edit = ({ isOpen, onClose, transactionOptions, row }) => {
@@ -16,8 +17,6 @@ const Edit = ({ isOpen, onClose, transactionOptions, row }) => {
   const [loading, setLoading] = useState(false);
   const [editRow, setEditRow] = useState({});
   const navigate = useNavigate();
-
-  console.log("EDIT COMPONENT: ", row);
 
   const onChangeHandler = (event) => {
     event.preventDefault();
@@ -51,7 +50,7 @@ const Edit = ({ isOpen, onClose, transactionOptions, row }) => {
             }
           ]
         };
-        const editResponse = await fetch(`${apiUrl}/transaction-record/${editRow.id}`, {
+        const editResponse = await fetch(`${apiUrl}/transaction-record/${row.id}`, {
           method: "POST",
           headers: {
             "Content-Type": "application/json",
@@ -74,7 +73,6 @@ const Edit = ({ isOpen, onClose, transactionOptions, row }) => {
           setLoading(false);
           navigate("/record");
 
-
         }
 
       } catch (error) {
@@ -89,14 +87,16 @@ const Edit = ({ isOpen, onClose, transactionOptions, row }) => {
   };
 
   useEffect(() => {
+    // console.log("EDIT COMPONENT: ", row);
+    const trnsXObj = row.transactionObj[0];
     setInputs({
-      id: editRow.id,
-      ProductId: editRow.ProductId,
-      productName: editRow.productName,
-      tType: editRow.tType,
-      amount: editRow.amount
+      id: row.id,
+      ProductId: trnsXObj.id,
+      productName: trnsXObj.name,
+      tType: trnsXObj.transactionType,
+      amount: trnsXObj.amount
     })
-  }, [])
+  }, [row]);
 
   // const editHandler = () => {
   // console.log(row);
@@ -183,7 +183,15 @@ const Edit = ({ isOpen, onClose, transactionOptions, row }) => {
   }
 
   return (
-    <Modal isOpen={isOpen} onClose={onClose}>
+    <div className={styles.main}>
+      <div className={styles.header}>
+        <Icon
+          className={styles.closeIcon}
+          name="close"
+          strokeColor={"white"}
+          strokeWidth={"2"}
+          onClickHandler={onClose} />
+      </div>
       <div className={styles.registerDiv}>
         <h2>Edit Transaction</h2>
 
@@ -225,7 +233,9 @@ const Edit = ({ isOpen, onClose, transactionOptions, row }) => {
 
         {/* Your error handling */}
       </div>
-    </Modal>
+      {/* <Modal isOpen={isOpen} onClose={onClose}>
+      </Modal> */}
+    </div>
 
 
   );
