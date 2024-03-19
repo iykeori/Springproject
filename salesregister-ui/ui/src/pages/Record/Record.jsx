@@ -1,4 +1,4 @@
-import React, { useEffect } from "react";
+import React, { useContext, useEffect } from "react";
 import { useState } from "react";
 import styles from "./styles.module.scss";
 import DataTable from "react-data-table-component";
@@ -9,6 +9,7 @@ import Select from "../../components/ui/Form/Select/Select.jsx";
 import { Link } from "react-router-dom";
 import { useNavigate } from "react-router-dom";
 import Edit from "../Edit/Edit.jsx";
+import { UpdateRecordContext } from "../../util/context/UpdateRecordContext";
 
 const transactionOptions = [
   { label: "Sales", value: "sales" },
@@ -21,15 +22,9 @@ const Record = () => {
   const [totalExpenses, setTotalExpenses] = useState("");
   const [totalIncome, setTotalIncome] = useState("");
   const apiUrl = "http://localhost:8080/api/v1";
-  const [inputs, setInputs] = useState({});
-  // const [errorInputs, setErrorInputs] = useState({});
-  // const [isError, setIsError] = useState(false);
-  // const [message, setMessage] = useState("");
-  // const [loading, setLoading] = useState(false);
-  // const [editRow, setEditRow] = useState({});
   const [row, setRow] = useState({});
-  const navigate = useNavigate();
   const [isModalOpen, setIsModalOpen] = useState(false);
+  const [hasUpdated, setHasUpdated] = useContext(UpdateRecordContext);
 
   //const [editRow, setEditRow] = useState({});
 
@@ -160,7 +155,7 @@ const Record = () => {
     };
 
     fetchData();
-  }, [data.length]);
+  }, [hasUpdated]);
 
 
   return (

@@ -3,10 +3,10 @@ import Input from "../../components/ui/Form/Input/Input";
 import Select from "../../components/ui/Form/Select/Select";
 import Modal from "../../components/ui/Modal/Modal";
 import styles from './styles.module.scss';
-import { useEffect, useState } from "react";
+import { useContext, useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import Icon from "../../util/icons";
-
+import { UpdateRecordContext } from "../../util/context/UpdateRecordContext";
 
 const Edit = ({ isOpen, onClose, transactionOptions, row }) => {
   const apiUrl = "http://localhost:8080/api/v1";
@@ -15,7 +15,7 @@ const Edit = ({ isOpen, onClose, transactionOptions, row }) => {
   const [isError, setIsError] = useState(false);
   const [message, setMessage] = useState("");
   const [loading, setLoading] = useState(false);
-  const [editRow, setEditRow] = useState({});
+  const [hasUpdated, setHasUpdated] = useContext(UpdateRecordContext);
   const navigate = useNavigate();
 
   const onChangeHandler = (event) => {
@@ -71,6 +71,7 @@ const Edit = ({ isOpen, onClose, transactionOptions, row }) => {
           setErrorInputs({});
           setMessage("Your transaction has been updated successfully");
           setLoading(false);
+          setHasUpdated(data);
           navigate("/record");
 
         }
