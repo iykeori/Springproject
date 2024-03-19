@@ -24,7 +24,8 @@ const Record = () => {
   const apiUrl = "http://localhost:8080/api/v1";
   const [row, setRow] = useState({});
   const [isModalOpen, setIsModalOpen] = useState(false);
-  const [hasUpdated, setHasUpdated] = useContext(UpdateRecordContext);
+  const [updatedRecord, setUpdatedRecord] = useState(null);
+  // const {hasUpdated, setHasUpdated} = useContext(UpdateRecordContext);
 
   //const [editRow, setEditRow] = useState({});
 
@@ -43,12 +44,6 @@ const Record = () => {
     console.log('Edited data:', editedData);
     setIsModalOpen(false);
   };
-
-
-
-
-
-
 
 
   const deleteHandler = (row) => {
@@ -155,7 +150,7 @@ const Record = () => {
     };
 
     fetchData();
-  }, [hasUpdated]);
+  }, [updatedRecord]);
 
 
   return (
@@ -175,6 +170,7 @@ const Record = () => {
         <Edit
           isOpen={isModalOpen}
           onClose={closeModal}
+          setUpdatedRecord={setUpdatedRecord}
           //onSubmit={handleEditSubmit}
           transactionOptions={transactionOptions}
           row={row}

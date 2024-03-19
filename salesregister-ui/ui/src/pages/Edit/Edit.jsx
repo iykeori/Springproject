@@ -8,14 +8,14 @@ import { useNavigate } from "react-router-dom";
 import Icon from "../../util/icons";
 import { UpdateRecordContext } from "../../util/context/UpdateRecordContext";
 
-const Edit = ({ isOpen, onClose, transactionOptions, row }) => {
+const Edit = ({ isOpen, onClose, transactionOptions, row, setUpdatedRecord }) => {
   const apiUrl = "http://localhost:8080/api/v1";
   const [inputs, setInputs] = useState({});
   const [errorInputs, setErrorInputs] = useState({});
   const [isError, setIsError] = useState(false);
   const [message, setMessage] = useState("");
   const [loading, setLoading] = useState(false);
-  const [hasUpdated, setHasUpdated] = useContext(UpdateRecordContext);
+  // const {hasUpdated, setHasUpdated} = useContext(UpdateRecordContext);
   const navigate = useNavigate();
 
   const onChangeHandler = (event) => {
@@ -71,7 +71,7 @@ const Edit = ({ isOpen, onClose, transactionOptions, row }) => {
           setErrorInputs({});
           setMessage("Your transaction has been updated successfully");
           setLoading(false);
-          setHasUpdated(data);
+          setUpdatedRecord(data);
           navigate("/record");
 
         }

@@ -5,26 +5,24 @@ import AppHeader from "../ui/app-header/app-header/app-header";
 import { UpdateRecordContext } from "../../util/context/UpdateRecordContext";
 
 
+const Layout = ({ props }) => {
+  const [hasUpdated, setHasUpdated] = React.useState("");
 
 
-const Layout = ({props}) => {
-    const [updateRecord, setUpdateRecord] = React.useState("");
+  return (
+    <UpdateRecordContext.Provider value={{ hasUpdated, setHasUpdated }}>
+      <div className={styles.main}>
+        <header>
+          <AppHeader />
+        </header>
+        {/* <h2> Layout</h2> */}
 
-
-    return (
-        <UpdateRecordContext.Provider value={{updateRecord, setUpdateRecord}}>
-            <div className={styles.main}>
-                <header>
-                    <AppHeader />
-                </header>
-                {/* <h2> Layout</h2> */}
-                
-                <main className="container">
-                    <Outlet />
-                </main>
-            </div>
-        </UpdateRecordContext.Provider>
-    );
+        <main className="container">
+          <Outlet />
+        </main>
+      </div>
+    </UpdateRecordContext.Provider>
+  );
 };
 
 export default Layout;
