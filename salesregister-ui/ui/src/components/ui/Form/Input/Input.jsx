@@ -9,6 +9,7 @@ const Input = ({
     value = "",
     placeholder,
     onChangeHandler,
+    onFocusHandler,
     ...props
 }) => {
     return (
@@ -21,6 +22,7 @@ const Input = ({
                 value={value}
                 placeholder={placeholder}
                 onChange={onChangeHandler}
+                onFocus={onFocusHandler}
                 {...props}
             />
             {

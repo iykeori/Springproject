@@ -23,9 +23,9 @@ const Register = ({ props }) => {
     event.preventDefault();
     //console.log(event.target);
     //i don't understand this -> [event.target.productName]
-    setErrorInputs(values => ({ 
-      ...values, 
-      [event.target.name]: event.target.value.trim().length ? false : true 
+    setErrorInputs(values => ({
+      ...values,
+      [event.target.name]: event.target.value.trim().length ? false : true
     }));
 
     setInputs(values => {
@@ -111,21 +111,21 @@ const Register = ({ props }) => {
   }, [errorInputs])
 
   function validate() {
-        const { productName, amount, tType } = inputs;
+    const { productName, amount, tType } = inputs;
 
-        if (!productName) {
-        setErrorInputs(values => ({ ...values, productName: true }));
-        }
+    if (!productName) {
+      setErrorInputs(values => ({ ...values, productName: true }));
+    }
 
-        if (!amount) {
-        setErrorInputs(values => ({ ...values, amount: true }));
-        }
+    if (!amount) {
+      setErrorInputs(values => ({ ...values, amount: true }));
+    }
 
-        if (!tType) {
-        setErrorInputs(values => ({ ...values, tType: true }));
-        }
+    if (!tType) {
+      setErrorInputs(values => ({ ...values, tType: true }));
+    }
 
-        return productName && amount && tType;
+    return productName && amount && tType;
   }
 
 
@@ -161,7 +161,18 @@ const Register = ({ props }) => {
           placeholder={"Amount"}
           onChangeHandler={onChangeHandler}
         />
-        <Link to="/batch-record" className={styles.addProductLink}>Add Product</Link>
+        <Link
+          state={{
+            initialData: {
+              productName: inputs.productName || "",
+              tType: inputs.tType || "",
+              amount: inputs.amount || ""
+            }
+          }}
+          to="/batch-record"
+          className={styles.addProductLink}>
+          Add Product
+        </Link>
 
         <button type="submit" disabled={loading}>
           {loading ? "Loading..." : "Register"}
@@ -174,7 +185,7 @@ const Register = ({ props }) => {
           </div>
         ) : null
       }
-    </div>
+    </div >
 
 
   );

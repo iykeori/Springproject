@@ -1,0 +1,14 @@
+/*Mobile First Style*/
+.row {
+  width: 100%;
+  height: auto;
+
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+/*Devices larger than mobile phone*/
+@media (min-width: 576px) {
+
+}

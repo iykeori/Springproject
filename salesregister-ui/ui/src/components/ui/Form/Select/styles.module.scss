@@ -1,36 +1,42 @@
 /* The following line can be included in a src/App.scss */
 @import '~bootstrap/scss/bootstrap';
+
 .main {
-    margin-bottom: 8px;
-    .select {
-        width: 100%;
-        padding: 10px;
-        font-size: 16px;
-        border: 1px solid #ccc;
-        border-radius: 4px;
-        background-color: #f8f8f8;
-        appearance: none;
+  margin-bottom: 8px;
+  width : 100%;
+  .select {
+    width           : 100%;
+    padding         : 10px;
+    font-size       : 16px;
+    border          : 1px solid #ccc;
+    border-radius   : 4px;
+    background-color: #f8f8f8;
+    appearance      : none;
 
-        &::after {
-            content: '\25BC'; /* Unicode character for downward arrow */
-            position: absolute;
-            top: 50%;
-            right: 10px;
-            transform: translateY(-50%);
-        }
+    &::after {
+      content  : '\25BC';
+      /* Unicode character for downward arrow */
+      position : absolute;
+      top      : 50%;
+      right    : 10px;
+      transform: translateY(-50%);
+    }
 
-        &:focus {
-            border-color: #007bff; /* Border color on focus */
-            outline: none; /* Remove default outline */
-        }
-        
-        label{
-            font-size: 1rem;
-            margin-bottom: 2px;
-            font-weight: 500
-        }
+    &:focus {
+      border-color: #007bff;
+      /* Border color on focus */
+      outline     : none;
+      /* Remove default outline */
     }
-    .error {
-        border: 1px solid red;
+
+    label {
+      font-size    : 1rem;
+      margin-bottom: 2px;
+      font-weight  : 500
     }
+  }
+
+  .error {
+    border: 1px solid red;
+  }
 }
