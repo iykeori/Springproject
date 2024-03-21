@@ -161,7 +161,7 @@ const Register = ({ props }) => {
           placeholder={"Amount"}
           onChangeHandler={onChangeHandler}
         />
-        <Link to="#" className={styles.addProductLink}>Add Product</Link>
+        <Link to="/batch-record" className={styles.addProductLink}>Add Product</Link>
 
         <button type="submit" disabled={loading}>
           {loading ? "Loading..." : "Register"}
