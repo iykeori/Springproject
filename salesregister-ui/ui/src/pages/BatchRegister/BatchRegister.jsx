@@ -3,6 +3,7 @@ import Input from '../../components/ui/Form/Input/Input';
 import Select from '../../components/ui/Form/Select/Select';
 import styles from './styles.module.css';
 import { useLocation } from 'react-router-dom';
+import Icon from '../../util/icons';
 
 
 const transactionOptions = [
@@ -25,9 +26,10 @@ const BatchRegister = (props) => {
 
   const addRowHandler = () => {
     setRows([...rows, { ...initialRow }]);
+    
   }
 
-  useEffect(()=> {
+  useEffect(() => {
     const tempRows = [...rows];
     tempRows[0]["productName"] = initialData.productName;
     tempRows[0]["amount"] = initialData.amount;
@@ -38,6 +40,22 @@ const BatchRegister = (props) => {
   useEffect(() => {
 
   }, [rows]);
+
+  const removeRow = (index) => {
+    if (rows.length > 1) {
+      const tempRows = [...rows];
+      tempRows.splice(index, 1);
+      setRows(tempRows);
+    }
+  }
+
+  const onSubmitHandler = () => {
+    console.log("ROWS: ", rows);
+  }
+
+  const validate = () => {
+
+  }
 
   const fieldChangeHandler = (index, field, value) => {
     const updatedRows = [...rows];
@@ -53,23 +71,29 @@ const BatchRegister = (props) => {
             key={index}
             index={index}
             data={row}
-            changeHandler={fieldChangeHandler} />
+            changeHandler={fieldChangeHandler}
+            onClickHandler={() => removeRow(index)} />
         ))
       }
       <button
         type="button"
         onClick={addRowHandler}>Add Row</button>
+      
+      <button onClick={onSubmitHandler}>Submit</button>
     </div>
   );
 }
 
 export default BatchRegister;
 
-const Row = ({ index, data, changeHandler }) => {
+const Row = ({ index, data, changeHandler, onClickHandler }) => {
+
   return (
     <div className={styles.row}>
       <Input
-        error={""}
+        mainClassName={styles.container}
+        className={styles.input}
+        error={data.error}
         type={"text"}
         name={"productName"}
         value={data.productName}
@@ -78,7 +102,9 @@ const Row = ({ index, data, changeHandler }) => {
       />
 
       <Select
-        error={""}
+        mainClassName={styles.container}
+        className={styles.select}
+        error={data.error}
         name={"tType"}
         value={data.tType || ""}
         options={transactionOptions}
@@ -87,13 +113,22 @@ const Row = ({ index, data, changeHandler }) => {
       />
 
       <Input
-        error={""}
+        mainClassName={styles.container}
+        className={styles.input}
+        error={data.error}
         value={data.amount || ""}
         type={"number"}
         name={"amount"}
         placeholder={"Amount"}
         onChangeHandler={(e) => changeHandler(index, "amount", e.target.value)}
       />
+
+      <Icon
+        className={styles.icon}
+        name="close"
+        strokeColor={"#0058fc"}
+        strokeWidth={"2"}
+        onClickHandler={onClickHandler} />
     </div>
   );
 }

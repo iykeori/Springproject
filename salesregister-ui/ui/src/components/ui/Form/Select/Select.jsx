@@ -8,14 +8,16 @@ const Select = ({
   value = "",
   options = [],
   onChangeHandler,
+  className,
+  mainClassName,
   ...props
 }) => {
 
   return (
-    <div className={styles.main}>
+    <div className={`${styles.main} ${mainClassName || ""}`}>
       <label>{label}</label>
       <select
-        className={`${styles.select} ${error ? styles.error : ""}`}
+        className={`${styles.select} ${error ? styles.error : ""} ${className || ""}`}
         value={value}
         onChange={onChangeHandler}
         {...props}
