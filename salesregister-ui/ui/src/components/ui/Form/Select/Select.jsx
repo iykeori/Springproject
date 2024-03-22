@@ -4,6 +4,7 @@ import styles from "./styles.module.scss";
 
 const Select = ({
   error = false,
+  showErrorText = true,
   label,
   value = "",
   options = [],
@@ -30,7 +31,7 @@ const Select = ({
         }
       </select>
       {
-        error ? (
+        error && showErrorText ? (
           <span>This field is required</span>
         ) : null
       }
