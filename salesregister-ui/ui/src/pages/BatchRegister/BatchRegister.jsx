@@ -17,15 +17,23 @@ const initialRow = {
   tType: ''
 }
 
+const errorFields = {
+  productNameError: false,
+  amountError: false,
+  tTypeError: false,
+}
+
 const BatchRegister = (props) => {
   const [rows, setRows] = useState([{ ...initialRow }]);
+  const [errors, setErrors] = useState([{ ...errorFields }]);
+  const [isError, setIsError] = useState(false);
   const location = useLocation();
   const initialData = location.state?.initialData;
-
-  console.log("STATE: ", initialData);
+  const apiUrl = "http://localhost:8080/api/v1";
 
   const addRowHandler = () => {
     setRows([...rows, { ...initialRow }]);
+    setErrors([...errors, { ...errorFields }]);
   }
 
   useEffect(() => {
@@ -42,18 +50,101 @@ const BatchRegister = (props) => {
 
   const removeRow = (index) => {
     if (rows.length > 1) {
+      //  Remove a row
       const tempRows = [...rows];
       tempRows.splice(index, 1);
       setRows(tempRows);
+
+      // Remove a row error fields
+      const tempErrors = [...errors];
+      tempErrors.splice(index, 1);
+      setErrors(tempErrors);
     }
   }
 
-  const onSubmitHandler = () => {
-    console.log("ROWS: ", rows);
+  const onSubmitHandler = async() => {
+    if (validate()) {
+      try {
+        const payload = preparePayload();
+  
+        const transactionRegisterPayload = {
+          transactionObjDTO: payload
+        };
+  
+        const response = await fetch(`${apiUrl}/transaction-record`, {
+          method: "POST",
+          headers: {
+            "Content-Type": "application/json",
+          },
+          body: JSON.stringify(transactionRegisterPayload),
+        });
+        // console.log("PAYLOAD: ", transactionRegisterPayload);
+  
+        const data = await response.json();
+        console.log(data);
+        if (data.error) {
+          console.log(data.error);
+          setIsError(true);
+          setMessage(data.message);
+          setLoading(false);
+        } else {
+          setIsError(false);
+          setLoading(false);
+  
+          setInputs({});
+          setErrorInputs({});
+  
+        }
+      } catch (error) {
+        console.log(error.message);
+        setIsError(true);
+        setLoading(false);
+        setMessage(error.message); // Just added this
+      }
+    }
+  }
+
+  const preparePayload = () => {
+    return rows.map((row) => ({
+      name: row.productName,
+      transactionType: row.tType,
+      amount: row.amount
+    }));
   }
 
   const validate = () => {
+    const tempErrors = [...errors];
+    let count = 0;
 
+    for (let i=0; i < rows.length; i++) {
+      const row = rows[i];
+
+      if (!row.productName) {
+        tempErrors[i].productNameError = true;
+      } else {
+        tempErrors[i].productNameError = false;
+      }
+
+      if (!row.amount) {
+        tempErrors[i].amountError = true;
+      } else {
+        tempErrors[i].amountError = false;
+      }
+
+      if (!row.tType) {
+        tempErrors[i].tTypeError = true;
+      } else {
+        tempErrors[i].tTypeError = false;
+      }
+
+      setErrors(tempErrors);
+
+      if (row.productName && row.amount && row.tType) {
+        count ++;
+      }
+    }
+
+    return rows.length === count;
   }
 
   const fieldChangeHandler = (index, field, value) => {
@@ -70,6 +161,7 @@ const BatchRegister = (props) => {
             key={index}
             index={index}
             data={row}
+            error={errors[index]}
             changeHandler={fieldChangeHandler}
             onClickHandler={() => removeRow(index)} />
         ))
@@ -85,14 +177,15 @@ const BatchRegister = (props) => {
 
 export default BatchRegister;
 
-const Row = ({ index, data, changeHandler, onClickHandler }) => {
+const Row = ({ index, data, error, changeHandler, onClickHandler }) => {
 
   return (
     <div className={styles.row}>
       <Input
         mainClassName={styles.container}
         className={styles.input}
-        error={data.error}
+        error={error.productNameError}
+        showErrorText={false}
         type={"text"}
         name={"productName"}
         value={data.productName}
@@ -103,7 +196,8 @@ const Row = ({ index, data, changeHandler, onClickHandler }) => {
       <Select
         mainClassName={styles.container}
         className={styles.select}
-        error={data.error}
+        error={error.tTypeError}
+        showErrorText={false}
         name={"tType"}
         value={data.tType || ""}
         options={transactionOptions}
@@ -114,7 +208,8 @@ const Row = ({ index, data, changeHandler, onClickHandler }) => {
       <Input
         mainClassName={styles.container}
         className={styles.input}
-        error={data.error}
+        error={error.amountError}
+        showErrorText={false}
         value={data.amount || ""}
         type={"number"}
         name={"amount"}

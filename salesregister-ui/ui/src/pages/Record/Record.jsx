@@ -65,6 +65,7 @@ const Record = () => {
         });
         const data = await response.json();
         setData(data);
+        console.log("DATA: ", data);
       };
       fetchData();
     } catch (error) {

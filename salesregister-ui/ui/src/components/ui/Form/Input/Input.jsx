@@ -3,6 +3,7 @@ import styles from "./styles.module.scss";
 
 const Input = ({
   error = false,
+  showErrorText = true,
   type,
   label,
   name,
@@ -28,7 +29,7 @@ const Input = ({
         {...props}
       />
       {
-        error ? (
+        error && showErrorText ? (
           <span>This field is required</span>
         ) : null
       }
