@@ -26,7 +26,6 @@ const BatchRegister = (props) => {
 
   const addRowHandler = () => {
     setRows([...rows, { ...initialRow }]);
-    
   }
 
   useEffect(() => {
