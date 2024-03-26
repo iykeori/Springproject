@@ -57,7 +57,7 @@ const Record = () => {
     try {
       setData([]);
       const fetchData = async () => {
-        const response = await fetch(`${apiUrl}/transaction-record`, {
+        const response = await fetch(`${apiUrl}/transaction-record/items`, {
           method: "GET",
           headers: {
             "Content-Type": "application/json",
@@ -65,7 +65,7 @@ const Record = () => {
         });
         const data = await response.json();
         setData(data);
-        console.log("DATA: ", data);
+        // console.log("DATA: ", data);
       };
       fetchData();
     } catch (error) {
@@ -74,31 +74,27 @@ const Record = () => {
   }, [totalIncome]);
 
   useEffect(() => {
+    // Prepare the row data in loop = rowsArray
     if (data.length > 0) {
-      console.log("We fetched some data!");
+      console.log("We fetched some data!", data.length);
       for (let i = 0; i < data.length; i++) {
         setColumns([
           {
             name: "Record ID",
-            selector: (row) => row.id
-          },
-          {
+            selector: (row) => row.transactionId
+          }, {
             name: "Product ID",
-            selector: (row) => row.transactionObj[0].id
-          },
-          {
+            selector: (row) => row.id
+          }, {
             name: "Name",
-            selector: (row) => row.transactionObj[0].name
-          },
-          {
+            selector: (row) => row.name
+          }, {
             name: "Transaction Type",
-            selector: (row) => row.transactionObj[0].transactionType
-          },
-          {
+            selector: (row) => row.transactionType
+          }, {
             name: "Amount",
-            selector: (row) => row.transactionObj[0].amount
-          },
-          {
+            selector: (row) => row.amount
+          }, {
             name: "Actions",
             selector: (row) => {
               return (
@@ -122,7 +118,7 @@ const Record = () => {
             }
 
           }
-        ])
+        ]);
       }
 
     }

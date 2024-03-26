@@ -2,7 +2,7 @@ import React, { useCallback, useEffect, useRef, useState } from 'react';
 import Input from '../../components/ui/Form/Input/Input';
 import Select from '../../components/ui/Form/Select/Select';
 import styles from './styles.module.css';
-import { useLocation } from 'react-router-dom';
+import { useLocation, useNavigate } from 'react-router-dom';
 import Icon from '../../util/icons';
 
 
@@ -28,6 +28,7 @@ const BatchRegister = (props) => {
   const [errors, setErrors] = useState([{ ...errorFields }]);
   const [isError, setIsError] = useState(false);
   const location = useLocation();
+  const navigate = useNavigate();
   const initialData = location.state?.initialData;
   const apiUrl = "http://localhost:8080/api/v1";
 
@@ -85,21 +86,21 @@ const BatchRegister = (props) => {
         if (data.error) {
           console.log(data.error);
           setIsError(true);
-          setMessage(data.message);
-          setLoading(false);
+          // setMessage(data.message);
+          // setLoading(false);
         } else {
           setIsError(false);
-          setLoading(false);
+          // setLoading(false);
   
-          setInputs({});
-          setErrorInputs({});
-  
+          // setInputs({});
+          // setErrorInputs({});
+          navigate('/record');
         }
       } catch (error) {
         console.log(error.message);
         setIsError(true);
-        setLoading(false);
-        setMessage(error.message); // Just added this
+        // setLoading(false);
+        // setMessage(error.message); // Just added this
       }
     }
   }

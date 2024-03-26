@@ -50,13 +50,15 @@ const Edit = ({ isOpen, onClose, transactionOptions, row, setUpdatedRecord }) =>
             }
           ]
         };
-        const editResponse = await fetch(`${apiUrl}/transaction-record/${row.id}`, {
+        const editResponse = await fetch(`${apiUrl}/transaction-record/${row.transactionId}/${row.id}`, {
           method: "POST",
           headers: {
             "Content-Type": "application/json",
           },
           body: JSON.stringify(transactionRegisterPayload),
         });
+
+        console.log("EDITED: ", editResponse);
 
         const data = await editResponse.json();
         console.log(data);
@@ -89,13 +91,13 @@ const Edit = ({ isOpen, onClose, transactionOptions, row, setUpdatedRecord }) =>
 
   useEffect(() => {
     // console.log("EDIT COMPONENT: ", row);
-    const trnsXObj = row.transactionObj[0];
+    // const trnsXObj = row.transactionObj[0];
     setInputs({
-      id: row.id,
-      ProductId: trnsXObj.id,
-      productName: trnsXObj.name,
-      tType: trnsXObj.transactionType,
-      amount: trnsXObj.amount
+      id: row.transactionId,
+      ProductId: row.id,
+      productName: row.name,
+      tType: row.transactionType,
+      amount: row.amount
     })
   }, [row]);
 
